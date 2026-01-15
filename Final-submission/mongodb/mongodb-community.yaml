@@ -1,0 +1,31 @@
+apiVersion: mongodbcommunity.mongodb.com/v1
+kind: MongoDBCommunity
+metadata:
+  name: mongodb-travelreg-submission 
+  namespace: mongodb
+spec:
+  members: 1
+  type: ReplicaSet
+  version: "6.0.5"
+  security:
+    authentication:
+      modes: ["SCRAM"]
+  users:
+    - name: user
+      db: travelreg
+      passwordSecretRef:
+        name: mongodb-admin-password
+      roles:
+        - name: readWrite 
+          db: travelreg
+      scramCredentialsSecretName: mongodb-travelreg-submission
+
+ #   statefulSet:
+  #      template:
+   #       # Adds a custom volume to the pods
+   #       spec:
+   #         containers:
+  #          - name: mongodb-agent
+    #          volumeMounts:
+   #             - name: custom-volume
+    #              mountPath: /my-custom-version/mount-path
